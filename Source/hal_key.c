@@ -34,7 +34,7 @@
 #define HAL_KEY_PORT_1_EDGEBIT   BV(1)
 #define HAL_KEY_PORT_2_EDGEBIT   BV(3)
 
-#define HAL_KEY_DEBOUNCE_VALUE  10
+#define HAL_KEY_DEBOUNCE_VALUE  5
 
 /* CPU port interrupt */
 #define HAL_KEY_CPU_PORT_0_IF P0IF

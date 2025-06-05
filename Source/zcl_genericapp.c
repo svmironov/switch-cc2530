@@ -59,7 +59,7 @@ afAddrType_t zclGenericApp_DstAddr;
 afAddrType_t zclGenericApp_DstAddr_2;
 
 // threshold for long press in milliseconds
-#define LONG_PRESS_TIME 1000
+#define LONG_PRESS_TIME 3000
 
 static uint32 keyPressTime[6] = {0};
 static bool   keyPressed[6] = {false};
