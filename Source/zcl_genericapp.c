@@ -187,7 +187,9 @@ uint16 zclGenericApp_event_loop( uint8 task_id, uint16 events )
 
   if ( events & GENERICAPP_END_DEVICE_REJOIN_EVT )
   {
-    bdb_ZedAttemptRecoverNwk();
+  #if ZG_BUILD_ENDDEVICE_TYPE
+    // bdb_ZedAttemptRecoverNwk();
+  #endif
     return ( events ^ GENERICAPP_END_DEVICE_REJOIN_EVT );
   }
 
