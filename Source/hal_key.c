@@ -116,8 +116,8 @@
 #define HAL_KEY_SW_3_ICTLBIT  BV(4) 
 #define HAL_KEY_SW_3_PXIFG    P0IFG 
 
-static bool port0Edge = false;
-static bool port1Edge = false;
+static bool port0Edge = HAL_KEY_FALLING_EDGE;
+static bool port1Edge = HAL_KEY_FALLING_EDGE;
 volatile bool HAL_KEY_SW_6_ACTIVE = false;
 volatile bool HAL_KEY_SW_5_ACTIVE = false;
 volatile bool HAL_KEY_SW_4_ACTIVE = false;
