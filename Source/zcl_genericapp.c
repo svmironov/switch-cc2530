@@ -90,7 +90,7 @@ static void zclGenericApp_HandleKeys( byte shift, byte keys );
 static void zclGenericApp_BasicResetCB( void );
 static void zclGenericApp_ProcessIdentifyTimeChange( uint8 endpoint );
 static void zclGenericApp_ProcessCommissioningStatus(bdbCommissioningModeMsg_t *bdbCommissioningModeMsg);
-static void sendOnOffToAllBindings(bool level, uint8 cmd, byte endpoint);
+static void sendToAllBindings(bool level, uint8 cmd, byte endpoint);
 
 /*********************************************************************
  * STATUS STRINGS
@@ -197,7 +197,7 @@ uint16 zclGenericApp_event_loop( uint8 task_id, uint16 events )
   {
     if ( keyPressed[2] && !longPressStarted[2] )
     {
-      sendOnOffToAllBindings(TRUE, LEVEL_MOVE_UP, APP_ENDPOINT_1);
+      sendToAllBindings(TRUE, LEVEL_MOVE_UP, APP_ENDPOINT_1);
       longPressStarted[2] = true;
     }
     return ( events ^ GENERICAPP_LONG_PRESS_SW3_EVT );
@@ -207,7 +207,7 @@ uint16 zclGenericApp_event_loop( uint8 task_id, uint16 events )
   {
     if ( keyPressed[3] && !longPressStarted[3] )
     {
-      sendOnOffToAllBindings(TRUE, LEVEL_MOVE_DOWN, APP_ENDPOINT_1);
+      sendToAllBindings(TRUE, LEVEL_MOVE_DOWN, APP_ENDPOINT_1);
       longPressStarted[3] = true;
     }
     return ( events ^ GENERICAPP_LONG_PRESS_SW4_EVT );
@@ -217,7 +217,7 @@ uint16 zclGenericApp_event_loop( uint8 task_id, uint16 events )
   {
     if ( keyPressed[4] && !longPressStarted[4] )
     {
-      sendOnOffToAllBindings(TRUE, LEVEL_MOVE_UP, APP_ENDPOINT_2);
+      sendToAllBindings(TRUE, LEVEL_MOVE_UP, APP_ENDPOINT_2);
       longPressStarted[4] = true;
     }
     return ( events ^ GENERICAPP_LONG_PRESS_SW5_EVT );
@@ -227,7 +227,7 @@ uint16 zclGenericApp_event_loop( uint8 task_id, uint16 events )
   {
     if ( keyPressed[5] && !longPressStarted[5] )
     {
-      sendOnOffToAllBindings(TRUE, LEVEL_MOVE_DOWN, APP_ENDPOINT_2);
+      sendToAllBindings(TRUE, LEVEL_MOVE_DOWN, APP_ENDPOINT_2);
       longPressStarted[5] = true;
     }
     return ( events ^ GENERICAPP_LONG_PRESS_SW6_EVT );
@@ -276,11 +276,11 @@ static void zclGenericApp_HandleKeys(byte shift, byte keys)
       osal_stop_timerEx(zclGenericApp_TaskID, GENERICAPP_LONG_PRESS_SW3_EVT);
       if (longPressStarted[2])
       {
-        sendOnOffToAllBindings(TRUE, COMMAND_LEVEL_STOP, APP_ENDPOINT_1);
+        sendToAllBindings(TRUE, COMMAND_LEVEL_STOP, APP_ENDPOINT_1);
       }
       else
       {
-        sendOnOffToAllBindings(FALSE, COMMAND_ON, APP_ENDPOINT_1);
+        sendToAllBindings(FALSE, COMMAND_ON, APP_ENDPOINT_1);
       }
       longPressStarted[2] = false;
       keyPressed[2] = false;
@@ -302,11 +302,11 @@ static void zclGenericApp_HandleKeys(byte shift, byte keys)
       osal_stop_timerEx(zclGenericApp_TaskID, GENERICAPP_LONG_PRESS_SW4_EVT);
       if (longPressStarted[3])
       {
-        sendOnOffToAllBindings(TRUE, COMMAND_LEVEL_STOP, APP_ENDPOINT_1);
+        sendToAllBindings(TRUE, COMMAND_LEVEL_STOP, APP_ENDPOINT_1);
       }
       else
       {
-        sendOnOffToAllBindings(FALSE, COMMAND_OFF, APP_ENDPOINT_1);
+        sendToAllBindings(FALSE, COMMAND_OFF, APP_ENDPOINT_1);
       }
       longPressStarted[3] = false;
       keyPressed[3] = false;
@@ -328,11 +328,11 @@ static void zclGenericApp_HandleKeys(byte shift, byte keys)
       osal_stop_timerEx(zclGenericApp_TaskID, GENERICAPP_LONG_PRESS_SW5_EVT);
       if (longPressStarted[4])
       {
-        sendOnOffToAllBindings(TRUE, COMMAND_LEVEL_STOP, APP_ENDPOINT_2);
+        sendToAllBindings(TRUE, COMMAND_LEVEL_STOP, APP_ENDPOINT_2);
       }
       else
       {
-        sendOnOffToAllBindings(FALSE, COMMAND_ON, APP_ENDPOINT_2);
+        sendToAllBindings(FALSE, COMMAND_ON, APP_ENDPOINT_2);
       }
       longPressStarted[4] = false;
       keyPressed[4] = false;
@@ -354,11 +354,11 @@ static void zclGenericApp_HandleKeys(byte shift, byte keys)
       osal_stop_timerEx(zclGenericApp_TaskID, GENERICAPP_LONG_PRESS_SW6_EVT);
       if (longPressStarted[5])
       {
-        sendOnOffToAllBindings(TRUE, COMMAND_LEVEL_STOP, APP_ENDPOINT_2);
+        sendToAllBindings(TRUE, COMMAND_LEVEL_STOP, APP_ENDPOINT_2);
       }
       else
       {
-        sendOnOffToAllBindings(FALSE, COMMAND_OFF, APP_ENDPOINT_2);
+        sendToAllBindings(FALSE, COMMAND_OFF, APP_ENDPOINT_2);
       }
       longPressStarted[5] = false;
       keyPressed[5] = false;
@@ -367,7 +367,7 @@ static void zclGenericApp_HandleKeys(byte shift, byte keys)
 }
 
 
-static void sendOnOffToAllBindings(bool level ,uint8 cmd, byte endpoint)
+static void sendToAllBindings(bool level ,uint8 cmd, byte endpoint)
 {
   uint8 bindIndex = 0;
   BindingEntry_t *bind;
